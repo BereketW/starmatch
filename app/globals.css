@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
+@theme {
+  --color-obsidian: #050505;
+  --color-alabaster: #f7f7f4;
+  --color-bone: #f4f4f0;
+  --color-surface: #0a0a0c;
+  --color-surface-secondary: #121215;
+  --color-border-subtle: #222226;
+  --color-border-strong: #3f3f46;
+  --color-text-muted: #71717a;
+  --color-text-secondary: #a1a1aa;
+  --color-foreground: #f4f4f0;
+  --color-power: #10b981;
+  --color-pressure: #ef4444;
+  --color-warning: #f59e0b;
+
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: var(--font-instrument-serif), "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+  --color-bg-base: #ffffff;
+  --color-text-base: #0a0a0a;
+  --color-surface-card: #ffffff;
+  --color-surface-secondary: #f7f7f5;
+  --color-border-card: #eaeaea;
+  --color-border-subtle: #eaeaea;
+  --color-border-strong: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-text-dim: #71717a;
+  --color-text-secondary: #52525b;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="alabaster"] {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --color-bg-base: #ffffff;
+  --color-text-base: #0a0a0a;
+  --color-surface-card: #ffffff;
+  --color-surface-secondary: #f7f7f5;
+  --color-border-card: #eaeaea;
+  --color-border-subtle: #eaeaea;
+  --color-border-strong: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-text-dim: #71717a;
+  --color-text-secondary: #52525b;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="obsidian"] {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --color-bg-base: #ffffff;
+  --color-text-base: #0a0a0a;
+  --color-surface-card: #ffffff;
+  --color-surface-secondary: #f7f7f5;
+  --color-border-card: #eaeaea;
+  --color-border-subtle: #eaeaea;
+  --color-border-strong: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-text-dim: #71717a;
+  --color-text-secondary: #52525b;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Editorial Brutalist Grid & Surface Helpers */
+.editorial-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(244, 244, 240, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 244, 240, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+[data-theme="alabaster"] .editorial-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(10, 10, 10, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.celestial-radial-bg {
+  background: radial-gradient(circle at 50% 0%, rgba(244, 244, 240, 0.06) 0%, rgba(5, 5, 5, 0) 65%);
+}
+
+[data-theme="alabaster"] .celestial-radial-bg {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.04) 0%, rgba(247, 247, 244, 0) 65%);
+}
+
+/* Hairline border helper */
+.hairline-border {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-border-subtle, #222226);
+}
+
+/* Accessible focus ring */
+.focus-stark:focus-visible {
+  outline: 2px solid var(--foreground, #f4f4f0);
+  outline-offset: 2px;
+}
+
+/* Editorial badge standard */
+.badge-editorial {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+}
+
+/* Iridescent Prismatic Rainbow Underglow for Hero Pill CTA */
+@keyframes iridescentShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.iridescent-pill-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.iridescent-pill-glow::before {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -5px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.24);
+  border-radius: 9999px;
+  filter: blur(8px);
+  opacity: 0.9;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Clean Print / PDF Stylesheet */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:block {
+    display: block !important;
+  }
+
+  .print-page-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 }
